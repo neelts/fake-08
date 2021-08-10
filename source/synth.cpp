@@ -11,6 +11,7 @@
 //
 
 #include "synth.h"
+#include "perlin.h"
 
 //#include <lol/noise> // lol::perlin_noise
 #include <cmath>     // std::fabs, std::fmod
@@ -61,13 +62,15 @@ float synth::waveform(int instrument, float advance)
 
             //TODO: not even doing zepto 8 noise here
 
-            //static lol::perlin_noise<1> noise;
+            static lol::perlin_noise<1> noise;
+            for (float m = 1.75f, d = 1.f; m <= 128; m *= 2.25f, d *= 0.75f)
+                ret += d * noise.eval(m * advance);
+
+            //ret = ((float)rand() / (float)RAND_MAX);
             //for (float m = 1.75f, d = 1.f; m <= 128; m *= 2.25f, d *= 0.75f)
-            //    ret += d * noise.eval(lol::vec_t<float, 1>(m * advance));
+            //    ret += d * ((float)rand() * m * advance / (float)RAND_MAX);
 
-            ret = ((float)rand() / (float)RAND_MAX);
-
-            return ret * 0.4f;
+            return ret * 0.3f;
         }
         case INST_PHASER:
         {   // This one has a subfrequency of freq/128 that appears
