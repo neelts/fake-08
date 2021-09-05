@@ -20,6 +20,9 @@ using namespace z8;
 const uint8_t PicoScreenWidth = 128;
 const uint8_t PicoScreenHeight = 128;
 
+uint8_t _sprLineBuffer[64];
+uint8_t _scrLineBuffer[64];
+
 
 //call initialize to make sure defaults are correct
 Graphics::Graphics(std::string fontdata, PicoRam* memory) {
@@ -159,7 +162,21 @@ void Graphics::copySpriteToScreen(
 
 	//since we get 2 pixels at a time, don't go through this whole loop every pixel
 	for (int y = 0; y < scr_h; y++) {
-		int x = 0;
+		int abs_spr_y = spr_y + y;
+		int abs_scr_y = scr_y + y;
+		//read all relevant sprite data into this buffer
+		memcpy(_sprLineBuffer, spritebuffer + (COMBINED_IDX(spr_x, abs_spr_y)), spr_w >> 1);
+		//read all relevant screen data into this buffer (need this for transparency and hardware mask)
+		memcpy(_scrLineBuffer, screenBuffer + (COMBINED_IDX(scr_x, abs_scr_y)), scr_w >> 1);
+
+		for(int x = 0; x < spr_w >> 1; x++) {
+			//handle mixing pixels here
+		}
+
+		//go through each pixel in with width
+
+		memcpy(screenBuffer + (COMBINED_IDX(scr_x, abs_scr_y)), _sprLineBuffer, spr_w >> 1);
+		/*
 		while (x < scr_w) {
 			int abs_spr_x = spr_x + (flip_x ? spr_w - (x + 1) : x);
 			int abs_spr_y = spr_y + (flip_y ? spr_h - (y + 1) : y);
@@ -225,6 +242,7 @@ void Graphics::copySpriteToScreen(
 			}
 			
 		}
+		*/
 
 	}
 }
