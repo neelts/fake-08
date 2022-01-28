@@ -552,7 +552,7 @@ const char* Host::logFilePrefix() {
 }
 
 std::string Host::customBiosLua() {
-    return "cartpath = \"roms/pico-8/\"\n"
+    return "cartpath = \"Roms/PICO/\"\n"
         "selectbtn = \"z\"\n"
         "pausebtn = \"esc\""
         "exitbtn = \"close window\""
