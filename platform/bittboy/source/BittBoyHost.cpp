@@ -17,8 +17,8 @@ using namespace std;
 // sdl
 #include <SDL/SDL.h>
 
-#define SCREEN_SIZE_X 320
-#define SCREEN_SIZE_Y 240
+#define SCREEN_SIZE_X 640
+#define SCREEN_SIZE_Y 480
 
 #define SCREEN_BPP 16
 
@@ -69,7 +69,7 @@ SDL_Rect SrcR;
 SDL_Rect DestR;
 
 int textureAngle;
-uint8_t flip; //0 none, 1 horizontal, 2 vertical - match SDL2's SDL_RendererFlip
+uint8_t flip = 2; //0 none, 1 horizontal, 2 vertical - match SDL2's SDL_RendererFlip
 int drawModeScaleX = 1;
 int drawModeScaleY = 1;
 
@@ -365,57 +365,12 @@ void set_pixel(SDL_Surface *surface, int x, int y, uint16_t pixel)
 */
 
 void Host::drawFrame(uint8_t* picoFb, uint8_t* screenPaletteMap, uint8_t drawMode){
-    drawModeScaleX = 1;
-    drawModeScaleY = 1;
-    switch(drawMode){
-        case 1:
-            drawModeScaleX = 2;
-            textureAngle = 0;
-            flip = 0;
-            break;
-        case 2:
-            drawModeScaleY = 2;
-            textureAngle = 0;
-            flip = 0;
-            break;
-        case 3:
-            drawModeScaleX = 2;
-            drawModeScaleY = 2;
-            textureAngle = 0;
-            flip = 0;
-            break;
-        //todo: mirroring
-        //case 4,6,7
-        case 129:
-            textureAngle = 0;
-            flip = 1;
-            break;
-        case 130:
-            textureAngle = 0;
-            flip = 2;
-            break;
-        case 131:
-            textureAngle = 0;
-            flip = 3;
-            break;
-        case 133:
-            textureAngle = 90;
-            flip = 0;
-            break;
-        case 134:
-            textureAngle = 180;
-            flip = 0;
-            break;
-        case 135:
-            textureAngle = 270;
-            flip = 0;
-            break;
-        default:
-            
-            textureAngle = 0;
-            flip = 0;
-            break;
-    }
+
+    drawModeScaleX = 3;
+    drawModeScaleY = 3;
+    textureAngle = 180;
+    flip = 0;
+
     int yoffset = stretch == StretchAndOverflow ? 4 / drawModeScaleX : 0;
 
     _setSourceRect(0, yoffset);
