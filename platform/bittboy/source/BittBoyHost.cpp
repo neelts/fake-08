@@ -69,7 +69,7 @@ SDL_Rect SrcR;
 SDL_Rect DestR;
 
 int textureAngle;
-uint8_t flip = 2; //0 none, 1 horizontal, 2 vertical - match SDL2's SDL_RendererFlip
+uint8_t flip; //0 none, 1 horizontal, 2 vertical - match SDL2's SDL_RendererFlip
 int drawModeScaleX = 1;
 int drawModeScaleY = 1;
 
@@ -168,15 +168,9 @@ void _changeStretch(StretchOption newStretch){
 
 
 Host::Host() {
-    #ifdef _BITTBOY
-    _cartDirectory = "/mnt/roms/PICO-8";
-    _logFilePrefix = "/mnt/emus/pico8/";
-    #else
-    std::string home = getenv("HOME");
-    
-    _cartDirectory = home + "/p8carts";
-    _logFilePrefix = home + "/fake08";
-
+    // OniosOS paths
+    _cartDirectory = "/mnt/Roms/PICO";
+    _logFilePrefix = "/mnt/Emu/PICO/";
     #endif
  }
 
@@ -370,29 +364,29 @@ void Host::drawFrame(uint8_t* picoFb, uint8_t* screenPaletteMap, uint8_t drawMod
     switch(drawMode){
         case 1:
             drawModeScaleX = 2;
-            textureAngle = 180;
-            flip = 0;
+            textureAngle = 0;
+            flip = 3;
             break;
         case 2:
             drawModeScaleY = 2;
-            textureAngle = 180;
-            flip = 0;
+            textureAngle = 0;
+            flip = 3;
             break;
         case 3:
             drawModeScaleX = 2;
             drawModeScaleY = 2;
-            textureAngle = 180;
-            flip = 0;
+            textureAngle = 0;
+            flip = 3;
             break;
         //todo: mirroring
         //case 4,6,7
         case 129:
             textureAngle = 0;
-            flip = 1;
+            flip = 3;
             break;
         case 130:
             textureAngle = 0;
-            flip = 2;
+            flip = 3;
             break;
         case 131:
             textureAngle = 0;
@@ -400,20 +394,19 @@ void Host::drawFrame(uint8_t* picoFb, uint8_t* screenPaletteMap, uint8_t drawMod
             break;
         case 133:
             textureAngle = 90;
-            flip = 0;
+            flip = 3;
             break;
         case 134:
             textureAngle = 180;
-            flip = 0;
+            flip = 3;
             break;
         case 135:
             textureAngle = 270;
-            flip = 0;
+            flip = 3;
             break;
         default:
-
             textureAngle = 0;
-            flip = 0;
+            flip = 3;
             break;
     }
     int yoffset = stretch == StretchAndOverflow ? 4 / drawModeScaleX : 0;
