@@ -17,8 +17,8 @@ using namespace std;
 // sdl
 #include <SDL/SDL.h>
 
-#define SCREEN_SIZE_X 640
-#define SCREEN_SIZE_Y 480
+#define SCREEN_SIZE_X 320
+#define SCREEN_SIZE_Y 240
 
 #define SCREEN_BPP 16
 
@@ -370,17 +370,17 @@ void Host::drawFrame(uint8_t* picoFb, uint8_t* screenPaletteMap, uint8_t drawMod
     switch(drawMode){
         case 1:
             drawModeScaleX = 2;
-            textureAngle = 0;
+            textureAngle = 180;
             flip = 0;
             break;
         case 2:
             drawModeScaleY = 2;
-            textureAngle = 0;
+            textureAngle = 180;
             flip = 0;
             break;
         case 3:
-            drawModeScaleX = 3;
-            drawModeScaleY = 3;
+            drawModeScaleX = 2;
+            drawModeScaleY = 2;
             textureAngle = 180;
             flip = 0;
             break;
