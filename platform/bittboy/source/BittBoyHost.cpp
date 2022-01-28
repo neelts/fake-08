@@ -171,7 +171,6 @@ Host::Host() {
     // OniosOS paths
     _cartDirectory = "/mnt/Roms/PICO";
     _logFilePrefix = "/mnt/Emu/PICO/";
-    #endif
  }
 
 void Host::oneTimeSetup(Color* paletteColors, Audio* audio){
