@@ -169,8 +169,8 @@ void _changeStretch(StretchOption newStretch){
 
 Host::Host() {
     // OniosOS paths
-    _cartDirectory = "/mnt/Roms/PICO";
-    _logFilePrefix = "/mnt/Emu/PICO/";
+    _cartDirectory = "/mnt/SDCARD/Roms/PICO";
+    _logFilePrefix = "/mnt/SDCARD/Emu/PICO/";
  }
 
 void Host::oneTimeSetup(Color* paletteColors, Audio* audio){
