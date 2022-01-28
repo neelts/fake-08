@@ -365,12 +365,57 @@ void set_pixel(SDL_Surface *surface, int x, int y, uint16_t pixel)
 */
 
 void Host::drawFrame(uint8_t* picoFb, uint8_t* screenPaletteMap, uint8_t drawMode){
+    drawModeScaleX = 1;
+    drawModeScaleY = 1;
+    switch(drawMode){
+        case 1:
+            drawModeScaleX = 2;
+            textureAngle = 0;
+            flip = 0;
+            break;
+        case 2:
+            drawModeScaleY = 2;
+            textureAngle = 0;
+            flip = 0;
+            break;
+        case 3:
+            drawModeScaleX = 3;
+            drawModeScaleY = 3;
+            textureAngle = 180;
+            flip = 0;
+            break;
+        //todo: mirroring
+        //case 4,6,7
+        case 129:
+            textureAngle = 0;
+            flip = 1;
+            break;
+        case 130:
+            textureAngle = 0;
+            flip = 2;
+            break;
+        case 131:
+            textureAngle = 0;
+            flip = 3;
+            break;
+        case 133:
+            textureAngle = 90;
+            flip = 0;
+            break;
+        case 134:
+            textureAngle = 180;
+            flip = 0;
+            break;
+        case 135:
+            textureAngle = 270;
+            flip = 0;
+            break;
+        default:
 
-    drawModeScaleX = 3;
-    drawModeScaleY = 3;
-    textureAngle = 180;
-    flip = 0;
-
+            textureAngle = 0;
+            flip = 0;
+            break;
+    }
     int yoffset = stretch == StretchAndOverflow ? 4 / drawModeScaleX : 0;
 
     _setSourceRect(0, yoffset);
